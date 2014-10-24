@@ -1,32 +1,60 @@
 {
 	"nodes":[
-		{"id":"pze9","label":"Arnold Zellner"},
-		{"id":"phe22","label":"James J. Heckman"},
-		{"id":"ASA","label":"ASA fellows"},
-		{"id":"Nobel","label":"Nobel prize"},
-		{"id":"pab175","label":"John Abowd"},
-		{"id":"pma385","label":"David N. Margolis"},
-		{"id":"pka253","label":"David Scott Kaplan"},
-		{"id":"pdo7","label":"Benoit Dostie"},
-		{"id":"pwo74","label":"Simon D. Woodcock"},
-		{"id":"psc351","label":"Ian Michael Schmutte"},
-		{"id":"pvi26","label":"Lars Vilhuber"},
+		{"id":"pze9","label":"Arnold Zellner","uri":"https://ideas.repec.org/e/pze9.html"},
+		{"id":"phe22","label":"James J. Heckman","uri":"https://ideas.repec.org/e/phe22.html"},
+		{"id":"ASA","label":"ASA fellows","uri":"http://www.amstat.org/awards/fellowslist.cfm"},
+		{"id":"pab175","label":"John Abowd","uri":"https://ideas.repec.org/e/pab175.html"},
+		{"id":"pma385","label":"David N. Margolis","uri":"https://ideas.repec.org/e/p385.html"},
+		{"id":"pka253","label":"David Scott Kaplan","uri":"https://ideas.repec.org/e/pka253.html"},
+		{"id":"pdo7","label":"Benoit Dostie","uri":"https://ideas.repec.org/e/pdo7.html"},
+		{"id":"pwo74","label":"Simon D. Woodcock","uri":"https://ideas.repec.org/e/pwo74.html"},
+		{"id":"psc351","label":"Ian Michael Schmutte","uri":"https://ideas.repec.org/e/psc351.html"},
+		{"id":"pvi26","label":"Lars Vilhuber","uri":"https://ideas.repec.org/e/pvi26.html"},
 		{"id":"pab175thesis","label":"Thesis"},
 		{"id":"pma385thesis","label":"Thesis"},
-		{"id":"pka353thesis","label":"Thesis"},
+		{"id":"pka253thesis","label":"Thesis"},
 		{"id":"pdo7thesis","label":"Thesis"},
+		{"id":"pwo74thesis","label":"Thesis"},
 		{"id":"psc351thesis","label":"Thesis"},
 		{"id":"pvi26thesis","label":"Thesis"},
 		{"id":"diwvjh70105","label":"Early Career Experiences","uri":"https://ideas.repec.org/a/diw/diwvjh/70-10-5.html"},
 		{"id":"jnlbesv23y2005p133-152br","label":"Sensitivity...","uri":"https://ideas.repec.org/a/bes/jnlbes/v23y2005p133-152.html"},
-		{"id":"br","label":"br"}
+		{"id":"ch201201","label":"Productivité","uri":"http://cpp.hec.ca/cms/assets/documents/recherches_publiees/CH_2012_01.pdf"},
+		{"id":"Nobel","label":"Nobel prize","uri":"http://www.nobelprize.org/nobel_prizes/economic-sciences/laureates/2000/heckman-lecture.html"}
 	],
 	"edges":[
 		{"id":"0","source":"pze9","target":"ASA","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"1","source":"phe22","target":"Nobel","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"1","source":"phe22","target":"ASA","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"1b","source":"pab175","target":"ASA","type":"arrow","size":1,"color":"#ccc"},
 		{"id":"2","source":"pab175thesis","target":"pze9","type":"arrow","size":1,"color":"#ccc"},
 		{"id":"3","source":"pab175thesis","target":"phe22","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"4","source":"pab175","target":"pab175thesis","type":"arrow","size":1,"color":"#ccc"}
+		{"id":"4","source":"pab175","target":"pab175thesis","type":"arrow","size":1,"color":"#ccc"},
 		
-			]
+		{"id":"5","source":"pma385thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"6","source":"pma385","target":"pma385thesis","type":"arrow","size":1,"color":"#ccc"},
+
+		{"id":"7","source":"pka253thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"8","source":"pka253","target":"pka253thesis","type":"arrow","size":1,"color":"#ccc"},
+
+		{"id":"9","source":"pdo7thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"10","source":"pdo7","target":"pdo7thesis","type":"arrow","size":1,"color":"#ccc"},
+
+		{"id":"11","source":"pwo74thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"12","source":"pwo74","target":"pwo74thesis","type":"arrow","size":1,"color":"#ccc"},
+
+		{"id":"13","source":"psc351thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"14","source":"psc351","target":"psc351thesis","type":"arrow","size":1,"color":"#ccc"},
+
+		{"id":"15","source":"pvi26thesis","target":"pma385","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"16","source":"pvi26","target":"pvi26thesis","type":"arrow","size":1,"color":"#ccc"},
+
+		{"id":"17","source":"pvi26","target":"diwvjh70105","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"18","source":"pvi26","target":"jnlbesv23y2005p133-152br","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"19","source":"pma385","target":"diwvjh70105","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"20","source":"pab175","target":"jnlbesv23y2005p133-152br","type":"arrow","size":1,"color":"#ccc"},
+{"id":"21","source":"pvi26","target":"ch201201","type":"arrow","size":1,"color":"#ccc"},
+{"id":"22","source":"pdo7","target":"ch201201","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"9999","source":"phe22","target":"Nobel","type":"arrow","size":1,"color":"#ccc"}
+
+	]
 }
