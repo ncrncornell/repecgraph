@@ -52,7 +52,7 @@ function buildGraph(){
 	});
 	
 	sigma.parsers.json(
-        'prov2.json', s,
+        'prov3.json', s,
         function(){
             var i, nodes = s.graph.nodes(), len = nodes.length;
             for (i = 0; i < len; i++) {
