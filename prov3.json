@@ -16,8 +16,8 @@
 		{"id":"pdo7thesis","label":"Thesis"},
 		{"id":"psc351thesis","label":"Thesis"},
 		{"id":"pvi26thesis","label":"Thesis"},
-		{"id":"diwvjh70105","label":"Early Career Experiences and Later Career Outcomes: Comparing the United States, France and Germany","uri":"https://ideas.repec.org/a/diw/diwvjh/70-10-5.html"},
-		{"id":"jnlbesv23y2005p133-152br","label":"The Sensitivity of Economic Statistics to Coding Errors in Personal Identifiers","uri":"https://ideas.repec.org/a/bes/jnlbes/v23y2005p133-152.html"},
+		{"id":"diwvjh70105","label":"Early Career Experiences","uri":"https://ideas.repec.org/a/diw/diwvjh/70-10-5.html"},
+		{"id":"jnlbesv23y2005p133-152br","label":"Sensitivity...","uri":"https://ideas.repec.org/a/bes/jnlbes/v23y2005p133-152.html"},
 		{"id":"br","label":"br"}
 	],
 	"edges":[
