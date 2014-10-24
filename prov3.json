@@ -11,6 +11,7 @@
 		{"id":"pwo74","label":"Simon D. Woodcock"},
 		{"id":"psc351","label":"Ian Michael Schmutte"},
 		{"id":"pvi26","label":"Lars Vilhuber"},
+		{"id":"pab175thesis","label":"Thesis"},
 		{"id":"pma385thesis","label":"Thesis"},
 		{"id":"pka353thesis","label":"Thesis"},
 		{"id":"pdo7thesis","label":"Thesis"},
@@ -25,29 +26,7 @@
 		{"id":"1","source":"phe22","target":"Nobel","type":"arrow","size":1,"color":"#ccc"},
 		{"id":"2","source":"pab175thesis","target":"pze9","type":"arrow","size":1,"color":"#ccc"},
 		{"id":"3","source":"pab175thesis","target":"phe22","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"4","source":"pab175","target":"pab175thesis","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"4","source":"pab175","target":"pab175thesis","type":"arrow","size":1,"color":"#ccc"}
 		
-		{"id":"5","source":"pma385thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"6","source":"pma385","target":"pma385thesis","type":"arrow","size":1,"color":"#ccc"},
-
-		{"id":"7","source":"pka253thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"8","source":"pka253","target":"pka253thesis","type":"arrow","size":1,"color":"#ccc"},
-
-		{"id":"9","source":"pdo7thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"10","source":"pdo7","target":"pdo7thesis","type":"arrow","size":1,"color":"#ccc"},
-
-		{"id":"11","source":"pwo74thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"12","source":"pwo74","target":"pwo74","type":"arrow","size":1,"color":"#ccc"},
-
-		{"id":"13","source":"psc351thesis","target":"pab175","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"14","source":"psc351","target":"psc351thesis","type":"arrow","size":1,"color":"#ccc"},
-
-		{"id":"15","source":"pvi26thesis","target":"pma385","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"16","source":"pvi26","target":"pvi26thesis","type":"arrow","size":1,"color":"#ccc"},
-
-		{"id":"17","source":"pvi26","target":"diwvjh70105","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"18","source":"pvi26","target":"jnlbesv23y2005p133-152br","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"19","source":"pma385","target":"diwvjh70105","type":"arrow","size":1,"color":"#ccc"},
-		{"id":"20","source":"pab175","target":"jnlbesv23y2005p133-152br","type":"arrow","size":1,"color":"#ccc"}
-	]
+			]
 }
