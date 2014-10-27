@@ -1,42 +1,27 @@
 % Flowcharting techniques for easy maintenance
 % Author: Brent Longborough
+% http://www.texample.net/media/tikz/examples/TEX/flexible-flow-chart.tex
 \documentclass[x11names]{article}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,chains}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=black,linkcolor=black}
+\usetikzlibrary{shapes,arrows,chains,positioning,fit,calc,backgrounds}
 %%%<
 \usepackage{verbatim}
-\usepackage[active,tightpage]{preview}
-\PreviewEnvironment{tikzpicture}
-\setlength\PreviewBorder{5mm}%
+%\usepackage[active,tightpage]{preview}
+%\PreviewEnvironment{tikzpicture}
+%\setlength\PreviewBorder{5mm}%
+\newcommand{\repec}{RePEc}
 %%%>
-\begin{comment}
-:Title: Easy-maintenance flowchart
-:Tags: flowcharts
-:Author: Brent Longborough
-:Slug: flexible-flow-chart
-
-  This TikZ example illustrates a number of techniques for making TikZ
-  flowcharts easier to maintain:
-    * Use of <on chain> and <on grid> to simplify positioning
-    * Use of global <node distance> options to eliminate the need to 
-      specify individual inter-node distances
-    * Use of <join> to reduce the need for references to node names
-    * Use of <join by> styles to tailor specific connectors
-    * Use of <coordinate> nodes to provide consistent layout for
-      parallel flow lines
-    * A method for consistent annotation of decision box exits
-    * A technique for marking coordinate nodes (for layout debugging)
-
-    I encourage you to tinker at this file - add intermediate boxes,
-    alter the global distance settings, and so on, to see how well (or
-    ill!) it adapts.
-\end{comment}
 \begin{document}
 % =================================================
 % Set up a few colours
-\colorlet{lcfree}{Green3}
-\colorlet{lcnorm}{Blue3}
-\colorlet{lccong}{Red3}
+\colorlet{lcadvisor}{Green3}
+\colorlet{lcauthor}{Blue3}
+\colorlet{lcuse}{Red3}
+\colorlet{lcattr}{Blue3}
+\definecolor{ncentity}{HTML}{B0C4DE}
 % -------------------------------------------------
 % Set up a new layer for the debugging marks, and make sure it is on
 % top
@@ -45,135 +30,262 @@
 % A macro for marking coordinates (specific to the coordinate naming
 % scheme used here). Swap the following 2 definitions to deactivate
 % marks.
-\providecommand{\cmark}[2][]{%
-  \begin{pgfonlayer}{marx}
-    \node [nmark] at (c#2#1) {#2};
-  \end{pgfonlayer}{marx}
-  } 
+%\providecommand{\cmark}[2][]{%
+%  \begin{pgfonlayer}{marx}
+%    \node [nmark] at (c#2#1) {#2};
+%  \end{pgfonlayer}{marx}
+%  } 
 \providecommand{\cmark}[2][]{\relax} 
 % -------------------------------------------------
 % Start the picture
-\begin{tikzpicture}[%
-    >=triangle 60,              % Nice arrows; your taste may be different
-    start chain=going below,    % General flow is top-to-bottom
-    node distance=6mm and 60mm, % Global setup of box spacing
-    every join/.style={norm},   % Default linetype for connecting boxes
-    ]
-% ------------------------------------------------- 
-% A few box styles 
-% <on chain> *and* <on grid> reduce the need for manual relative
-% positioning of nodes
-\tikzset{
-  base/.style={draw, on chain, on grid, align=center, minimum height=4ex},
-  proc/.style={base, rectangle, text width=8em},
-  test/.style={base, diamond, aspect=2, text width=5em},
-  term/.style={proc, rounded corners},
-  % coord node style is used for placing corners of connecting lines
-  coord/.style={coordinate, on chain, on grid, node distance=6mm and 25mm},
-  % nmark node style is used for coordinate debugging marks
-  nmark/.style={draw, cyan, circle, font={\sffamily\bfseries}},
-  % -------------------------------------------------
-  % Connector line styles for different parts of the diagram
-  norm/.style={->, draw, lcnorm},
-  free/.style={->, draw, lcfree},
-  cong/.style={->, draw, lccong},
-  it/.style={font={\small\itshape}}
-}
-% -------------------------------------------------
-% Start by placing the nodes
-\node [proc, densely dotted, it] (p0) {New trigger message thread};
-% Use join to connect a node to the previous one 
-\node [term, join]      {Trigger scheduler};
-\node [proc, join] (p1) {Get quota $k > 1$};
-\node [proc, join]      {Open queue};
-\node [proc, join]      {Dispatch message};
-\node [test, join] (t1) {Got msg?};
-% No join for exits from test nodes - connections have more complex
-% requirements
-% We continue until all the blocks are positioned
-\node [proc] (p2) {$k \mathbin{{-}{=}} 1$};
-\node [proc, join] (p3) {Dispatch message};
-\node [test, join] (t2) {Got msg?};
-\node [test] (t3) {Capacity?};
-\node [test] (t4) {$k \mathbin{{-}{=}} 1$};
-% We position the next block explicitly as the first block in the
-% second column.  The chain 'comes along with us'. The distance
-% between columns has already been defined, so we don't need to
-% specify it.
-\node [proc, fill=lcfree!25, right=of p1] (p4) {Reset congestion};
-\node [proc, join=by free] {Set \textsc{mq} wait flag};
-\node [proc, join=by free] (p5) {Dispatch message};
-\node [test, join=by free] (t5) {Got msg?};
-\node [test] (t6) {Capacity?};
-% Some more nodes specifically positioned (we could have avoided this,
-% but try it and you'll see the result is ugly).
-\node [test] (t7) [right=of t2] {$k \mathbin{{-}{=}} 1$};
-\node [proc, fill=lccong!25, right=of t3] (p8) {Set congestion};
-\node [proc, join=by cong, right=of t4] (p9) {Close queue};
-\node [term, join] (p10) {Exit trigger message thread};
-% -------------------------------------------------
-% Now we place the coordinate nodes for the connectors with angles, or
-% with annotations. We also mark them for debugging.
-\node [coord, right=of t1] (c1)  {}; \cmark{1}   
-\node [coord, right=of t3] (c3)  {}; \cmark{3}   
-\node [coord, right=of t6] (c6)  {}; \cmark{6}   
-\node [coord, right=of t7] (c7)  {}; \cmark{7}   
-\node [coord, left=of t4]  (c4)  {}; \cmark{4}   
-\node [coord, right=of t4] (c4r) {}; \cmark[r]{4}
-\node [coord, left=of t7]  (c5)  {}; \cmark{5}   
-% -------------------------------------------------
-% A couple of boxes have annotations
-\node [above=0mm of p4, it] {(Queue was empty)};
-\node [above=0mm of p8, it] {(Queue was not empty)};
-% -------------------------------------------------
-% All the other connections come out of tests and need annotating
-% First, the straight north-south connections. In each case, we first
-% draw a path with a (consistently positioned) annotation node, then
-% we draw the arrow itself.
-\path (t1.south) to node [near start, xshift=1em] {$y$} (p2);
-  \draw [*->,lcnorm] (t1.south) -- (p2);
-\path (t2.south) to node [near start, xshift=1em] {$y$} (t3); 
-  \draw [*->,lcnorm] (t2.south) -- (t3);
-\path (t3.south) to node [near start, xshift=1em] {$y$} (t4); 
-  \draw [*->,lcnorm] (t3.south) -- (t4);
-\path (t5.south) to node [near start, xshift=1em] {$y$} (t6); 
-  \draw [*->,lcfree] (t5.south) -- (t6);
-\path (t6.south) to node [near start, xshift=1em] {$y$} (t7); 
-  \draw [*->,lcfree] (t6.south) -- (t7); 
-% ------------------------------------------------- 
-% Now the straight east-west connections. To provide consistent
-% positioning of the test exit annotations, we have positioned
-% coordinates for the vertical part of the connectors. The annotation
-% text is positioned on a path to the coordinate, and then the whole
-% connector is drawn to its destination box.
-\path (t3.east) to node [near start, yshift=1em] {$n$} (c3); 
-  \draw [o->,lccong] (t3.east) -- (p8);
-\path (t4.east) to node [yshift=-1em] {$k \leq 0$} (c4r); 
-  \draw [o->,lcnorm] (t4.east) -- (p9);
-% -------------------------------------------------
-% Finally, the twisty connectors. Again, we place the annotation
-% first, then draw the connector
-\path (t1.east) to node [near start, yshift=1em] {$n$} (c1); 
-  \draw [o->,lcfree] (t1.east) -- (c1) |- (p4);
-\path (t2.east) -| node [very near start, yshift=1em] {$n$} (c1); 
-  \draw [o->,lcfree] (t2.east) -| (c1);
-\path (t4.west) to node [yshift=-1em] {$k>0$} (c4); 
-  \draw [*->,lcnorm] (t4.west) -- (c4) |- (p3);
-\path (t5.east) -| node [very near start, yshift=1em] {$n$} (c6); 
-  \draw [o->,lcfree] (t5.east) -| (c6); 
-\path (t6.east) to node [near start, yshift=1em] {$n$} (c6); 
-  \draw [o->,lcfree] (t6.east) -| (c7); 
-\path (t7.east) to node [yshift=-1em] {$k \leq 0$} (c7); 
-  \draw [o->,lcfree] (t7.east) -- (c7)  |- (p9);
-\path (t7.west) to node [yshift=-1em] {$k>0$} (c5); 
-  \draw [*->,lcfree] (t7.west) -- (c5) |- (p5);
-% -------------------------------------------------
-% A last flourish which breaks all the rules
-\draw [->,MediumPurple4, dotted, thick, shorten >=1mm]
-  (p9.south) -- ++(5mm,-3mm)  -- ++(27mm,0) 
-  |- node [black, near end, yshift=0.75em, it]
-    {(When message + resources available)} (p0);
-% -------------------------------------------------
-\end{tikzpicture}
-% =================================================
+%\include{tikz-example}
+\section{Graph components}
+
+\subsection{Thesis}
+The data for the thesis components are derived from \repec~ Genealogy. It encompasses a single \emph{entity} type (thesis), a single \emph{activity} (implicit in the data: Ph.D.) combined via two \emph{relationships} or \emph{roles} -- advisor and author of the thesis -- as well as associated \emph{agents}.
+\begin{enumerate}
+\item Ph.D.: Activity
+\item Entity: Thesis
+\item Agent: Advisor
+\item Agent: Ph.D. Candidate/Author
+\end{enumerate}
+Note that we will define a generic thesis ``entity'' with each thesis in the database being a specialization of this generic entity. 
+\paragraph{Agents}
+\lstset{language=XML,breaklines=true}
+\begin{lstlisting}
+    <prov:agent prov:id="repec:pab175">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>John M. Abowd</foaf:givenName>
+    </prov:agent>
+
+    <prov:agent prov:id="repec:pze9">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>Arnold Zellner</foaf:givenName>
+    </prov:agent>
+
+    <prov:agent prov:id="repec:phe22">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>James M. Heckman</foaf:givenName>
+    </prov:agent>
+
+    <prov:agent prov:id="repec:pvi26">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>Lars Vilhuber</foaf:givenName>
+    </prov:agent>
+\end{lstlisting}
+\paragraph{Entities}
+\begin{lstlisting}
+    <prov:entity prov:id="exn:thesis">
+      <dct:title>A doctoral thesis</dct:title>
+    </prov:entity>
+    <prov:entity prov:id="exn:thesispab175">
+      <dct:title>An Econometric Model of the U.S. Market for Higher Education</dct:title>
+      <dct:date>1977</dct:date>
+    </prov:entity>
+\end{lstlisting}
+Note that the thesis could be fleshed out with full bibliographic information, although that information may not be available within the \repec~ network.
+\paragraph{Activities}
+\begin{lstlisting}
+    <prov:activity prov:id="repec:PhD"/>
+    <prov:activity prov:id="repec:PhDpab175"/>
+\end{lstlisting}
+Depending on the implementation, we could also have defined a generic ``advisor'' activity:
+\begin{lstlisting}
+    <prov:activity prov:id="repec:advisor"/>
+    <prov:activity prov:id="repec:advisorpab1751"/>
+    <prov:activity prov:id="repec:advisorpab1752"/>
+\end{lstlisting}
+However, we believe that this is not necessary in the context of this particular application, and can be accomodated by a particular role:
+\paragraph{Linking them}
+\begin{lstlisting}
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAssociatedWith>
+    
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:pze9"/>
+      <prov:role>repec:advisor</prov:role>
+    </prov:wasAssociatedWith>
+
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:phe22"/>
+      <prov:role>repec:advisor</prov:role>
+    </prov:wasAssociatedWith>
+
+    <prov:wasGeneratedBy>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+          <prov:activity prov:ref="repec:PhDpab175"/>
+    </prov:wasGeneratedBy>
+\end{lstlisting}
+Pulling these together generates the simple subgraph in Figure~\ref{fig:thesis:basic}:
+\begin{figure}
+\caption{Thesis graph}\label{fig:thesis:basic}
+\include{tikz-thesis}
+\end{figure}
+However, by explicitly incorporating attributions, we recover the original database construction:
+\begin{lstlisting}
+    <prov:wasAttributedTo>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAttributedTo>
+    
+    <prov:wasAttributedTo>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:pze9"/>
+      <prov:role>repec:advisor</prov:role>
+    </prov:wasAttributedTo>
+
+    <prov:wasAttributedTo>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:phe22"/>
+      <prov:role>repec:advisor</prov:role>
+    </prov:wasAttributedTo>
+
+\end{lstlisting}
+Incorporating this into the graph, we first obtain a more complex graph (Figure~\ref{fig:thesis:complex}):
+\begin{figure}
+\caption{Thesis graph with attribution}\label{fig:thesis:complex}
+\include{tikz-thesis-complex}
+\end{figure}
+However, collapsing the graph to only the attribution links yields a representation amenable to the usual bipartite graph visualization (Figure~\ref{fig:thesis:bipartite}).
+
+\begin{figure}
+\caption{Theses as bipartite graph}\label{fig:thesis:bipartite}
+\include{tikz-bipartite-thesis}
+\end{figure}
+
+
+\subsection{Co-authorship}
+The \repec~ coauthorship network already exists at \url{http://collec.repec.org}. (internal representation to be added here).
+
+Implicit in that network is a simple bi-partite network between articles (entities) and authors (agents). Translated into PROV, the definition of agents are as before, whereas the new entities are
+\paragraph{Entities}
+\begin{lstlisting}
+    <prov:entity prov:id="exn:article">
+      <dct:title>A published paper</dct:title>
+    </prov:entity>
+    <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99">
+      <dct:title>National estimates of gross employment and job flows from the Quarterly Workforce Indicators with demographic and industry detail</dct:title>
+      <dct:date>2011</dct:date>
+    </prov:entity>
+
+    <prov:entity prov:id="exn:paper">
+      <dct:title>A working paper</dct:title>
+    </prov:entity>
+    <prov:entity prov:id="hdl:RePEc:cen:wpaper:10-11">
+      <dct:title>National estimates of gross employment and job flows from the Quarterly Workforce Indicators with Demographic and Industry Detail</dct:title>
+      <dct:date>2010</dct:date>
+    </prov:entity>
+    
+\end{lstlisting}
+\paragraph{Activities}
+For completeness, we define a research activity to generate articles and papers, although we could directly associate the paper with its authors:
+\begin{lstlisting}
+    <prov:activity prov:id="repec:research"/>
+    <prov:activity prov:id="repec:research12345"/>
+\end{lstlisting}
+\paragraph{Linking them}
+\begin{lstlisting}
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:research12345"/>
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAssociatedWith>
+    
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:research12345"/>
+      <prov:agent prov:ref="repec:pvi26"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAssociatedWith>
+    
+    <prov:wasGeneratedBy>
+		<prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
+		<prov:activity prov:ref="repec:research12345"/>
+    </prov:wasGeneratedBy>
+    <prov:wasGeneratedBy>
+	    <prov:entity prov:id="hdl:RePEc:cen:wpaper:10-11" />
+		<prov:activity prov:ref="repec:research12345"/>
+    </prov:wasGeneratedBy>
+\end{lstlisting}
+Pulling these together generates the subgraph in Figure~\ref{fig:author:complex}.
+\begin{figure}
+\caption{Authorship with latent research activity}\label{fig:author:complex}
+\include{tikz-authorship}
+\end{figure}
+
+
+The indirect association with the (latent) research activity is implicit in \repec 's linkage of different versions of the same article. Alternatively, these could be noted as revisions; however, the linkage through a research activity is potentially more general. In this case, the attribution is directly coded in the \repec~ database, and the implicit research activity is deduced.
+\begin{lstlisting}
+    <prov:wasAttributedTo>
+      <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAttributedTo>
+    
+    <prov:wasAttributedTo>
+      <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
+      <prov:agent prov:ref="repec:pvi26"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAttributedTo>
+\end{lstlisting}
+\begin{figure}[ht]
+\caption{Authorship with direct attribution}\label{fig:author:morecomplex}
+\include{tikz-authorship-complex}
+\end{figure}
+For simplicity, a simplified version of the graph, omitting the latent research activity, more closely approximates the bipartite representation:
+\begin{figure}[ht]
+\caption{Authorship with direct attribution}\label{fig:author:simple}
+\include{tikz-authorship-simple}
+\end{figure}
+\begin{figure}[ht]
+\caption{Authorship with direct attribution}\label{fig:author:bipartite}
+\include{tikz-bipartite-coauthor}
+\end{figure}
+
+\section{Combining the subgraphs}
+\label{sec:combine}
+We set up the subgraphs such that concepts are identical, and in particular, theses can be treated in much the same way that published articles and working papers can be: they are written artifacts (``entities'') of a particular type, that are associated with authors (``agents''). The connectedness of the authorship network is entirely driven by co-author relations: entities with more than one edge generated connected groups. Adding theses to such a network does not change much: almost by definition, each theses has only one author. The average degree of the network might be slightly reduced, in fact, although the \repec~ network has an upward bias in the degrees - authors who only publish their thesis and then exit academia, and who those have a low degree, are (probably) under-represented. Figure~\ref{fig:author:theses} shows the bipartite representation of the \repec~ network with theses added in.%
+\footnote{Note that theses are not captured by the \repec~ network, and thus don't actually have an entry.}
+
+\begin{figure}[ht]
+\caption{Authorship with theses}\label{fig:author:theses}
+\include{tikz-bipartite-coauthor-theses}
+\end{figure}
+
+However, by adding in a new type of link -- advisorship --, the \repec~ collaboration network quite naturally is extended, and a substantial amount of new edges are added:
+\begin{figure}[ht]
+\caption{Authorship with theses and advisors}\label{fig:author:theses:complete}
+\include{tikz-bipartite-coauthor-theses-complete}
+\end{figure}
+
+\section{Network metrics before and after}
+\label{sec:metrics}
+
+We should compute the network metrics before and after the inclusion of thesis advisors in the collaboration network. (average number of edges, average path length, changes in ranking of betweenness).
+
+\section{An exploratory interface}
+\label{sec:interface}
+Here plug in the graphical interface.
+
+\section{Future work}
+\label{sec:future_work}
+Already present in the \repec~ network are citation links (linking papers among themselves). This work links in with CED$^2$AR work (citations) and other efforts for linking papers and articles to the data used for (empirical) papers. Establishing such links can be represented by a tripartite graph:
+
+\begin{figure}[ht]
+\caption{Authorship with theses, data}\label{fig:tripartite}
+\include{tikz-tripartite}
+\end{figure}
+This will ultimately allow to attribute authorship for certain datasets in a clear fashion, which is currently not usual in the social sciences.\footnote{See ICPSR examples, however.} For an example, see Figure~\ref{fig:tripartite-hilite}.
+
+\begin{figure}[ht]
+\caption{Authorship of data}\label{fig:tripartite-hilite}
+\include{tikz-tripartite-hilite}
+\end{figure}
+
+
 \end{document}

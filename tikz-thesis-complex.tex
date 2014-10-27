@@ -1,0 +1,147 @@
+% Flowcharting techniques for easy maintenance
+% Author: Brent Longborough
+% http://www.texample.net/media/tikz/examples/TEX/flexible-flow-chart.tex
+% Start the picture
+\begin{tikzpicture}[%
+    >=triangle 60,              % Nice arrows; your taste may be different
+    start chain=going below,    % General flow is top-to-bottom
+    node distance=10mm and 60mm, % Global setup of box spacing
+    every join/.style={author},   % Default linetype for connecting boxes
+    ]
+% ------------------------------------------------- 
+% A few box styles 
+% <on chain> *and* <on grid> reduce the need for manual relative
+% positioning of nodes
+\tikzset{
+  base/.style={draw, on chain, on grid, align=center, minimum height=4ex},
+  activity/.style={base, rectangle, text width=8em, minimum height=2em},
+  agent/.style={base, diamond, aspect=2, text width=5em},
+  entity/.style={base, ellipse,fill=ncentity!25,minimum height=2em,minimum width=8em,align=center},
+  legend/.style={base, draw=none,rectangle},
+  % coord node style is used for placing corners of connecting lines
+  coord/.style={coordinate, on chain, on grid, node distance=6mm and 25mm},
+  % nmark node style is used for coordinate debugging marks
+  nmark/.style={draw, cyan, circle, font={\sffamily\bfseries}},
+  % -------------------------------------------------
+  % Connector line styles for different parts of the diagram
+  author/.style={->, draw, lcauthor},
+  adivsor/.style={->, draw, lcadvisor},
+  use/.style={->, draw, lcuse},
+  it/.style={font={\small\itshape}}
+}
+% -------------------------------------------------
+% Legend
+\node [legend] (l1)             {Role:};
+\node [legend, below=of l1, yshift=1.5em ] (l3) {Role:};
+\node [legend, below=of l3, yshift=1.5em ] (l5)             {Link:};
+\node [legend, below=of l5, yshift=1.5em ] (l7)             {Link:};
+\node [legend, right= 30mm of l1] (l2)             {Advisor};
+\node [legend, right= 30mm of l3] (l4)             {Author};
+\node [legend, right= 30mm of l5] (l6) {Attribution};
+\node [legend, right= 30mm of l7] (l8) {Association};
+% Start by placing the nodes
+\node [entity, below=of l7, densely dotted, it] (e0) {Thesis pab175};
+% Use join to connect a node to the previous one 
+\node [activity] (a1)     {Ph.D. pab175};
+\node [agent] (p2) {pab175};
+% We position the next block explicitly as the first block in the
+% second column.  The chain 'comes along with us'. The distance
+% between columns has already been defined, so we don't need to
+% specify it.
+\node [agent, fill=lcadvisor!25, right=of a1] (p4) {phe22};
+\node [agent, fill=lcadvisor!25] (p5) {pze9};
+% -------------------------------------------------
+% Now we place the coordinate nodes for the connectors with angles, or
+% with annotations. We also mark them for debugging.
+\node [coord, left=40mm of e0] (c0)  {}; \cmark{0}   
+\node [coord, left=40mm of p2] (c1)  {}; \cmark{1}   
+\node [coord, right=60mm of e0] (c2)  {}; \cmark{2}   
+\node [coord, right=20mm of c2] (c3)  {}; \cmark{3}   
+\node [coord, right=20mm of p5] (c4)  {}; \cmark{4}   
+%\node [coord, right=20mm of l0] (c0)  {}; \cmark{0}   
+%\node [coord, right=10mm of c0] (c1)  {}; \cmark{1}   
+%\node [coord, right=20mm of l1] (c2)  {}; \cmark{2}   
+%\node [coord, right=10mm of c2] (c3)  {}; \cmark{3}   
+% -------------------------------------------------
+% A couple of boxes have annotations
+%\node [above=0mm of p4, it] {(Queue was empty)};
+%\node [above=0mm of p8, it] {(Queue was not empty)};
+% -------------------------------------------------
+% All the other connections come out of tests and need annotating
+% First, the straight north-south connections. In each case, we first
+% draw a path with a (consistently positioned) annotation node, then
+% we draw the arrow itself.
+\path (e0.south) to node [left] {wasGeneratedBy} (a1);
+  \draw [->,lcuse] (e0.south) -- (a1);
+\path (a1.south) to node [left] {wasAssociatedWith} (p2);
+  \draw [->,lcauthor,densely dotted] (a1.south) -- (p2);
+\path (a1.east) to node [above] {wasAssociatedWith} (p4);
+  \draw [->,lcadvisor,densely dotted] (a1.east) -- (p4);
+\path (a1.east) to node [above] {wasAssociatedWith} (p5);
+  \draw [->,lcadvisor,densely dotted] (a1.east) -- (p5);
+% Legend
+\path (l1.east) to node {} (l2);
+\draw [->,lcadvisor,densely dotted] (l1.east) -- (l2);
+\path (l3.east) to node {} (l4);
+\draw [->,lcauthor,densely dotted] (l3.east) -- (l4);
+\path (l5.east) to node {} (l6);
+\draw [->] (l5.east) -- (l6);
+\path (l7.east) to node {} (l8);
+\draw [->,densely dotted] (l7.east) -- (l8);
+% Attribution
+\path (e0.west) to node {} (c0);
+  \draw [-,lcauthor] (e0.west) -- (c0);
+\path (c0) to node  {wasAttributedTo} (c1);
+  \draw [-,lcauthor] (c0) -- (c1);
+\path (c1) to node {} (p2.west);
+  \draw [->,lcauthor] (c1) -- (p2.west);
+% Advisors
+\path (e0.east) to node [above] {wasAttributedTo} (c2);
+  \draw [-,lcadvisor] (e0.east) -- (c2);
+\path (c2) to node {} (p4.north);
+  \draw [->,lcadvisor] (c2) -- (p4.north);
+\path (c2) to node {} (c3);
+  \draw [-,lcadvisor] (c2) -- (c3);
+\path (c3) to node {} (c4);
+  \draw [-,lcadvisor] (c3) -- (c4);
+\path (c4) to node {} (p5.east);
+  \draw [->,lcadvisor] (c4) -- (p5.east);
+
+%\path (t2.south) to node [near start, xshift=1em] {$y$} (t3); 
+%  \draw [*->,lcauthor] (t2.south) -- (t3);
+%\path (t3.south) to node [near start, xshift=1em] {$y$} (t4); 
+%  \draw [*->,lcauthor] (t3.south) -- (t4);
+%\path (t5.south) to node [near start, xshift=1em] {$y$} (t6); 
+%  \draw [*->,lcadivsor] (t5.south) -- (t6);
+%\path (t6.south) to node [near start, xshift=1em] {$y$} (t7); 
+%  \draw [*->,lcadivsor] (t6.south) -- (t7); 
+%% ------------------------------------------------- 
+%% Now the straight east-west connections. To provide consistent
+%% positioning of the test exit annotations, we have positioned
+%% coordinates for the vertical part of the connectors. The annotation
+%% text is positioned on a path to the coordinate, and then the whole
+%% connector is drawn to its destination box.
+%\path (t3.east) to node [near start, yshift=1em] {$n$} (c3); 
+%  \draw [o->,lccong] (t3.east) -- (p8);
+%\path (t4.east) to node [yshift=-1em] {$k \leq 0$} (c4r); 
+%  \draw [o->,lcauthor] (t4.east) -- (p9);
+%% -------------------------------------------------
+%% Finally, the twisty connectors. Again, we place the annotation
+%% first, then draw the connector
+%\path (t1.east) to node [near start, yshift=1em] {$n$} (c1); 
+%  \draw [o->,lcadivsor] (t1.east) -- (c1) |- (p4);
+%\path (t2.east) -| node [very near start, yshift=1em] {$n$} (c1); 
+%  \draw [o->,lcadivsor] (t2.east) -| (c1);
+%\path (t4.west) to node [yshift=-1em] {$k>0$} (c4); 
+%  \draw [*->,lcauthor] (t4.west) -- (c4) |- (p3);
+%\path (t5.east) -| node [very near start, yshift=1em] {$n$} (c6); 
+%  \draw [o->,lcadivsor] (t5.east) -| (c6); 
+%\path (t6.east) to node [near start, yshift=1em] {$n$} (c6); 
+%  \draw [o->,lcadivsor] (t6.east) -| (c7); 
+%\path (t7.east) to node [yshift=-1em] {$k \leq 0$} (c7); 
+%  \draw [o->,lcadivsor] (t7.east) -- (c7)  |- (p9);
+%\path (t7.west) to node [yshift=-1em] {$k>0$} (c5); 
+%  \draw [*->,lcadivsor] (t7.west) -- (c5) |- (p5);
+% -------------------------------------------------
+% -------------------------------------------------
+\end{tikzpicture}

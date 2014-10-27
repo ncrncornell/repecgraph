@@ -1,0 +1,60 @@
+% from http://tex.stackexchange.com/questions/15088/bipartite-graphs
+
+\begin{tikzpicture}[thick,
+  >=triangle 60,              % Nice arrows; your taste may be different	
+  every node/.style={draw,circle},
+  fsnode/.style={fill=ncentity},
+  ssnode/.style={fill=lcauthor!25},
+  every fit/.style={ellipse,draw,inner sep=2pt,text width=2cm},
+  ->,shorten >= 3pt,shorten <= 3pt
+]
+
+% the vertices of U
+\begin{scope}[start chain=going below,node distance=7mm]
+\foreach \i/\nodename in {1/Gross Labor-Force Flows,2/National Estimates,3/Sorting}
+  \node[fsnode,on chain] (p\i) [label=left: \i: \nodename] {};
+\end{scope}
+
+% the vertices of T
+\begin{scope}[yshift=-4cm,start chain=going below,node distance=7mm]
+\foreach \i/\nodename in {1/pab175,2/pma385,3/pvi26,4/psc351}
+  \node[fsnode,on chain] (t\i) [label=left: \href{https://genealogy.repec.org/pages/\nodename .html}{\nodename thesis}] {};
+\end{scope}
+
+%
+% the vertices of V
+\begin{scope}[xshift=4cm,yshift=-0.5cm,start chain=going below,node distance=7mm]
+\foreach \i/\repecid  in {1/pab175,2/pze9,3/pvi26,4/psc351,5/pkr29,6/unknown}
+  \node[ssnode,on chain] (s\i) [label=right: \i\ \href{http://ideas.repec.org/f/\repecid .html}{\repecid}] {};
+\end{scope}
+
+
+% the set U
+\node [lcauthor,fit=(p1) (p3),label=above:$Papers$] {};
+% the set V
+\node [ncentity,fit=(s1) (s6),label=above:$Authors$] {};
+% the set T
+\node [lcauthor,fit=(t1) (t4),label=below:$Thesis$] {};
+
+% the edges
+\draw  (p1) -- (s1);
+\draw (p1) -- (s2);
+\draw [lcattr] (p2) -- (s1);
+\draw [lcattr] (p2) -- (s3);
+\draw  (p3) -- (s1);
+\draw (p3) -- (s4);
+\draw (p3) -- (s5);
+\draw (p3) -- (s6);
+% for the theses
+% the edges
+\draw [lcauthor] (t1) -- (s1);
+\draw [lcauthor] (t2) -- (s4);
+\draw [lcauthor] (t3) -- (s5);
+\draw [lcauthor] (t4) -- (s4);
+\draw [lcadvisor] (s2) -- (t1);
+\draw [lcadvisor] (s3) -- (t1);
+\draw [lcadvisor] (s1) -- (t2);
+\draw [lcadvisor] (s4) -- (t3);
+\draw [lcadvisor] (s6) -- (t3);
+\draw [lcadvisor] (s1) -- (t4);
+\end{tikzpicture}
