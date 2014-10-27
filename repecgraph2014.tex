@@ -5,7 +5,9 @@
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,urlcolor=black,linkcolor=black}
+\hypersetup{colorlinks=true,urlcolor=black,filecolor=black,linkcolor=black,citecolor=black,linkcolor=black}
+\usepackage{attachfile}
+\attachfilesetup{color=0 0 0}
 \usetikzlibrary{shapes,arrows,chains,positioning,fit,calc,backgrounds}
 %%%<
 \usepackage{verbatim}
@@ -14,6 +16,11 @@
 %\setlength\PreviewBorder{5mm}%
 \newcommand{\repec}{RePEc}
 %%%>
+\newcommand{\mylstinputlisting}[2]{
+\lstinputlisting{#1}
+\textattachfile{#1}{(#2 : #1)}
+}
+
 
 \title{Extending a co-authorship network analysis to include theses}
 \author{Lars Vilhuber%
@@ -62,103 +69,27 @@ The data for the thesis components are derived from \repec~ Genealogy. It encomp
 \item Agent: Ph.D. Candidate/Author
 \end{enumerate}
 Note that we will define a generic thesis ``entity'' with each thesis in the database being a specialization of this generic entity. 
-\paragraph{Agents}
+\subsubsection*{Agents}
 \lstset{language=XML,breaklines=true}
-\begin{lstlisting}
-    <prov:agent prov:id="repec:pab175">
-      <prov:type>prov:Person</prov:type>
-      <foaf:givenName>John M. Abowd</foaf:givenName>
-    </prov:agent>
 
-    <prov:agent prov:id="repec:pze9">
-      <prov:type>prov:Person</prov:type>
-      <foaf:givenName>Arnold Zellner</foaf:givenName>
-    </prov:agent>
+\mylstinputlisting{theses-agents.xml}{XML file attached}
 
-    <prov:agent prov:id="repec:phe22">
-      <prov:type>prov:Person</prov:type>
-      <foaf:givenName>James M. Heckman</foaf:givenName>
-    </prov:agent>
+\subsubsection*{Entities}
 
-    <prov:agent prov:id="repec:pvi26">
-      <prov:type>prov:Person</prov:type>
-      <foaf:givenName>Lars Vilhuber</foaf:givenName>
-    </prov:agent>
-\end{lstlisting}
-\paragraph{Entities}
-\begin{lstlisting}
-    <prov:entity prov:id="exn:thesis">
-      <dct:title>A doctoral thesis</dct:title>
-    </prov:entity>
-    <prov:entity prov:id="exn:thesispab175">
-      <dct:title>An Econometric Model of the U.S. Market for Higher Education</dct:title>
-      <dct:date>1977</dct:date>
-    </prov:entity>
-\end{lstlisting}
-Note that the thesis could be fleshed out with full bibliographic information, although that information may not be available within the \repec~ network.
-\paragraph{Activities}
-\begin{lstlisting}
-    <prov:activity prov:id="repec:PhD"/>
-    <prov:activity prov:id="repec:PhDpab175"/>
-\end{lstlisting}
-Depending on the implementation, we could also have defined a generic ``advisor'' activity:
-\begin{lstlisting}
-    <prov:activity prov:id="repec:advisor"/>
-    <prov:activity prov:id="repec:advisorpab1751"/>
-    <prov:activity prov:id="repec:advisorpab1752"/>
-\end{lstlisting}
-However, we believe that this is not necessary in the context of this particular application, and can be accomodated by a particular role:
-\paragraph{Linking them}
-\begin{lstlisting}
-    <prov:wasAssociatedWith>
-      <prov:activity prov:ref="repec:thesispab175"/>
-      <prov:agent prov:ref="repec:pab175"/>
-      <prov:role>repec:author</prov:role>
-    </prov:wasAssociatedWith>
-    
-    <prov:wasAssociatedWith>
-      <prov:activity prov:ref="repec:thesispab175"/>
-      <prov:agent prov:ref="repec:pze9"/>
-      <prov:role>repec:advisor</prov:role>
-    </prov:wasAssociatedWith>
+\mylstinputlisting{theses-entities.xml}{XML file attached}
 
-    <prov:wasAssociatedWith>
-      <prov:activity prov:ref="repec:thesispab175"/>
-      <prov:agent prov:ref="repec:phe22"/>
-      <prov:role>repec:advisor</prov:role>
-    </prov:wasAssociatedWith>
-
-    <prov:wasGeneratedBy>
-          <prov:entity   prov:ref="repec:thesispab175"/>
-          <prov:activity prov:ref="repec:PhDpab175"/>
-    </prov:wasGeneratedBy>
-\end{lstlisting}
+Note that the thesis could be fleshed out with full bibliographic information, although that information may not be available within the \repec~ network. Our definition includes a generic ``advisor'' activity, although we will not use that, instead highlighting that relationship through a ``role.''
+\subsubsection*{Activities}
+\mylstinputlisting{theses-activities.xml}{XML file attached}
+\subsubsection*{Linking them}
+\mylstinputlisting{theses-links1.xml}{XML file attached}
 Pulling these together generates the simple subgraph in Figure~\ref{fig:thesis:basic}:
 \begin{figure}
 \caption{Thesis graph}\label{fig:thesis:basic}
 \include{tikz-thesis}
 \end{figure}
-However, by explicitly incorporating attributions, we recover the original database construction:
-\begin{lstlisting}
-    <prov:wasAttributedTo>
-          <prov:entity   prov:ref="repec:thesispab175"/>
-      <prov:agent prov:ref="repec:pab175"/>
-      <prov:role>repec:author</prov:role>
-    </prov:wasAttributedTo>
-    
-    <prov:wasAttributedTo>
-          <prov:entity   prov:ref="repec:thesispab175"/>
-      <prov:agent prov:ref="repec:pze9"/>
-      <prov:role>repec:advisor</prov:role>
-    </prov:wasAttributedTo>
-
-    <prov:wasAttributedTo>
-          <prov:entity   prov:ref="repec:thesispab175"/>
-      <prov:agent prov:ref="repec:phe22"/>
-      <prov:role>repec:advisor</prov:role>
-    </prov:wasAttributedTo>
-
-\end{lstlisting}
+However, by explicitly incorporating attributions, we recover the original database construction.
+\lstinputlisting{theses-links2.xml}{XML file attached}
 Incorporating this into the graph, we first obtain a more complex graph (Figure~\ref{fig:thesis:complex}):
 \begin{figure}
 \caption{Thesis graph with attribution}\label{fig:thesis:complex}
@@ -176,75 +107,27 @@ However, collapsing the graph to only the attribution links yields a representat
 The \repec~ coauthorship network already exists at \url{http://collec.repec.org}. (internal representation to be added here).
 
 Implicit in that network is a simple bi-partite network between articles (entities) and authors (agents). Translated into PROV, the definition of agents are as before, whereas the new entities are
-\paragraph{Entities}
-\begin{lstlisting}
-    <prov:entity prov:id="exn:article">
-      <dct:title>A published paper</dct:title>
-    </prov:entity>
-    <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99">
-      <dct:title>National estimates of gross employment and job flows from the Quarterly Workforce Indicators with demographic and industry detail</dct:title>
-      <dct:date>2011</dct:date>
-    </prov:entity>
+\subsubsection*{Entities}
+\mylstinputlisting{coauthor-entities.xml}{XML file attached}
 
-    <prov:entity prov:id="exn:paper">
-      <dct:title>A working paper</dct:title>
-    </prov:entity>
-    <prov:entity prov:id="hdl:RePEc:cen:wpaper:10-11">
-      <dct:title>National estimates of gross employment and job flows from the Quarterly Workforce Indicators with Demographic and Industry Detail</dct:title>
-      <dct:date>2010</dct:date>
-    </prov:entity>
-    
-\end{lstlisting}
-\paragraph{Activities}
+\subsubsection*{Activities}
 For completeness, we define a research activity to generate articles and papers, although we could directly associate the paper with its authors:
-\begin{lstlisting}
-    <prov:activity prov:id="repec:research"/>
-    <prov:activity prov:id="repec:research12345"/>
-\end{lstlisting}
-\paragraph{Linking them}
-\begin{lstlisting}
-    <prov:wasAssociatedWith>
-      <prov:activity prov:ref="repec:research12345"/>
-      <prov:agent prov:ref="repec:pab175"/>
-      <prov:role>repec:author</prov:role>
-    </prov:wasAssociatedWith>
-    
-    <prov:wasAssociatedWith>
-      <prov:activity prov:ref="repec:research12345"/>
-      <prov:agent prov:ref="repec:pvi26"/>
-      <prov:role>repec:author</prov:role>
-    </prov:wasAssociatedWith>
-    
-    <prov:wasGeneratedBy>
-		<prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
-		<prov:activity prov:ref="repec:research12345"/>
-    </prov:wasGeneratedBy>
-    <prov:wasGeneratedBy>
-	    <prov:entity prov:id="hdl:RePEc:cen:wpaper:10-11" />
-		<prov:activity prov:ref="repec:research12345"/>
-    </prov:wasGeneratedBy>
-\end{lstlisting}
+\mylstinputlisting{coauthor-activities.xml}{XML file attached}
+
+\subsubsection*{Linking them}
+\mylstinputlisting{coauthor-links.xml}{XML file attached}
+
 Pulling these together generates the subgraph in Figure~\ref{fig:author:complex}.
 \begin{figure}
 \caption{Authorship with latent research activity}\label{fig:author:complex}
 \include{tikz-authorship}
 \end{figure}
 
-
 The indirect association with the (latent) research activity is implicit in \repec 's linkage of different versions of the same article. Alternatively, these could be noted as revisions; however, the linkage through a research activity is potentially more general. In this case, the attribution is directly coded in the \repec~ database, and the implicit research activity is deduced.
-\begin{lstlisting}
-    <prov:wasAttributedTo>
-      <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
-      <prov:agent prov:ref="repec:pab175"/>
-      <prov:role>repec:author</prov:role>
-    </prov:wasAttributedTo>
-    
-    <prov:wasAttributedTo>
-      <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
-      <prov:agent prov:ref="repec:pvi26"/>
-      <prov:role>repec:author</prov:role>
-    </prov:wasAttributedTo>
-\end{lstlisting}
+
+\mylstinputlisting{coauthor-links2.xml}{XML file attached}
+
+
 \begin{figure}[ht]
 \caption{Authorship with direct attribution}\label{fig:author:morecomplex}
 \include{tikz-authorship-complex}
@@ -269,7 +152,7 @@ We set up the subgraphs such that concepts are identical, and in particular, the
 \include{tikz-bipartite-coauthor-theses}
 \end{figure}
 
-However, by adding in a new type of link -- advisorship --, the \repec~ collaboration network quite naturally is extended, and a substantial amount of new edges are added:
+However, by adding in a new type of link -- advisorship --, the \repec~ collaboration network quite naturally is extended, and a substantial amount of new edges are added (Figure~\ref{fig:author:theses:complete}).
 \begin{figure}[ht]
 \caption{Authorship with theses and advisors}\label{fig:author:theses:complete}
 \include{tikz-bipartite-coauthor-theses-complete}

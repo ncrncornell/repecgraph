@@ -1,0 +1,16 @@
+    <prov:entity prov:id="exn:article">
+      <dct:title>A published paper</dct:title>
+    </prov:entity>
+    <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99">
+      <dct:title>National estimates of gross employment and job flows from the Quarterly Workforce Indicators with demographic and industry detail</dct:title>
+      <dct:date>2011</dct:date>
+    </prov:entity>
+
+    <prov:entity prov:id="exn:paper">
+      <dct:title>A working paper</dct:title>
+    </prov:entity>
+    <prov:entity prov:id="hdl:RePEc:cen:wpaper:10-11">
+      <dct:title>National estimates of gross employment and job flows from the Quarterly Workforce Indicators with Demographic and Industry Detail</dct:title>
+      <dct:date>2010</dct:date>
+    </prov:entity>
+

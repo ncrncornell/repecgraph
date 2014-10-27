@@ -1,0 +1,21 @@
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:research12345"/>
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAssociatedWith>
+    
+    <prov:wasAssociatedWith>
+      <prov:activity prov:ref="repec:research12345"/>
+      <prov:agent prov:ref="repec:pvi26"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAssociatedWith>
+    
+    <prov:wasGeneratedBy>
+		<prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
+		<prov:activity prov:ref="repec:research12345"/>
+    </prov:wasGeneratedBy>
+    <prov:wasGeneratedBy>
+	    <prov:entity prov:id="hdl:RePEc:cen:wpaper:10-11" />
+		<prov:activity prov:ref="repec:research12345"/>
+    </prov:wasGeneratedBy>
+

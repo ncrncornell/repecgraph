@@ -1,0 +1,8 @@
+    <prov:entity prov:id="exn:thesis">
+      <dct:title>A doctoral thesis</dct:title>
+    </prov:entity>
+    <prov:entity prov:id="exn:thesispab175">
+      <dct:title>An Econometric Model of the U.S. Market for Higher Education</dct:title>
+      <dct:date>1977</dct:date>
+    </prov:entity>
+

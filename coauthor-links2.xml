@@ -1,0 +1,12 @@
+    <prov:wasAttributedTo>
+      <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAttributedTo>
+    
+    <prov:wasAttributedTo>
+      <prov:entity prov:id="hdl:RePEc:eee:econom:v:161:y:2011:i:1:p:82-99" />
+      <prov:agent prov:ref="repec:pvi26"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAttributedTo>
+

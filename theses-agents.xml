@@ -1,0 +1,19 @@
+    <prov:agent prov:id="repec:pab175">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>John M. Abowd</foaf:givenName>
+    </prov:agent>
+
+    <prov:agent prov:id="repec:pze9">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>Arnold Zellner</foaf:givenName>
+    </prov:agent>
+
+    <prov:agent prov:id="repec:phe22">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>James M. Heckman</foaf:givenName>
+    </prov:agent>
+
+    <prov:agent prov:id="repec:pvi26">
+      <prov:type>prov:Person</prov:type>
+      <foaf:givenName>Lars Vilhuber</foaf:givenName>
+    </prov:agent>

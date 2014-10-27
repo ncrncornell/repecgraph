@@ -1,0 +1,18 @@
+    <prov:wasAttributedTo>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:pab175"/>
+      <prov:role>repec:author</prov:role>
+    </prov:wasAttributedTo>
+    
+    <prov:wasAttributedTo>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:pze9"/>
+      <prov:role>repec:advisor</prov:role>
+    </prov:wasAttributedTo>
+
+    <prov:wasAttributedTo>
+          <prov:entity   prov:ref="repec:thesispab175"/>
+      <prov:agent prov:ref="repec:phe22"/>
+      <prov:role>repec:advisor</prov:role>
+    </prov:wasAttributedTo>
+
