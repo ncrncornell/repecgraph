@@ -5,6 +5,7 @@
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage{hyperref}
+\usepackage{fullpage}
 \hypersetup{colorlinks=true,urlcolor=black,filecolor=black,linkcolor=black,citecolor=black,linkcolor=black}
 \usepackage{attachfile}
 \attachfilesetup{color=0 0 0}
@@ -141,6 +142,7 @@ For simplicity, a simplified version of the graph, omitting the latent research 
 \caption{Authorship with direct attribution}\label{fig:author:bipartite}
 \include{tikz-bipartite-coauthor}
 \end{figure}
+\clearpage
 
 \section{Combining the subgraphs}
 \label{sec:combine}
@@ -158,14 +160,21 @@ However, by adding in a new type of link -- advisorship --, the \repec~ collabor
 \include{tikz-bipartite-coauthor-theses-complete}
 \end{figure}
 
+\clearpage
+
 \section{Network metrics before and after}
 \label{sec:metrics}
 
 We should compute the network metrics before and after the inclusion of thesis advisors in the collaboration network. (average number of edges, average path length, changes in ranking of betweenness).
-
+\clearpage
 \section{An exploratory interface}
 \label{sec:interface}
-Here plug in the graphical interface.
+Here plug in the graphical interface. See example at \url{http://www.vrdc.cornell.edu/repecgraph/} and Figure~\ref{fig:webinterface-pvi26}.
+\begin{figure}[ht]
+\caption{Example webinterface}\label{fig:webinterface-pvi26}
+\includegraphics[width=0.9\textwidth]{web-interface-pvi26}
+\end{figure}
+\clearpage
 
 \section{Future work}
 \label{sec:future_work}
