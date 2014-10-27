@@ -42,7 +42,7 @@
 			<div id="filterHide"></div>
 			<div id="main" class="col-sm-11 col-md-10 col-lg-8 ">
 				<h2>Prov</h2>
-				<div>Partial RePEc genealogy and co-author graph (manually constructed). Red links are advisor-advisee links, grey links are (co-) authorship links, and black links are awards. All information other than the awards were gleaned from RePEc sites. Clicking on a node leads to the RePEc entry for that node (and highlights incoming/outgoing links to that node). For an alternate visualization with thesis nodes includes (more appropriate, but less interesting in a static application), see <a href="with-thesis-nodes.html">this other page</a>.</div>
+				<div>Partial RePEc genealogy and co-author graph (manually constructed). Red links are advisor-advisee links, grey links are (co-) authorship links, and black links are awards. All information other than the awards were gleaned from RePEc sites. Clicking on a node leads to the RePEc entry for that node (and highlights incoming/outgoing links to that node). For an alternate visualization with thesis nodes includes (more appropriate, but less interesting in a static application), see <a href="with-thesis-nodes.html">this other page</a>. See also <a href="http://larsvilhuber.github.io/repecgraph/">http://larsvilhuber.github.io/repecgraph/</a>.</div>
 	<button id="provShuffle" class="btn">Redraw Graph</button>
 	<div id="graph2"><canvas class="sigma-scene" width="940" height="800px" style="position: absolute; width: 940px; height: 800px;"></canvas><canvas class="sigma-mouse" width="940" height="800px" style="position: absolute; width: 940px; height: 800px;"></canvas></div>
 	<script src="scripts/sigma.min.js"></script>
@@ -91,36 +91,6 @@
 		
 			<script type="text/javascript" src="scripts/prov3.js"></script>
 		
-	
-	
-	<script type="text/javascript">
-			//Popovers for inline help
-			$('.helpIcon').popover({ trigger: 'hover'});
-			
-			// Email obfuscator script 2.1 by Tim Williams, University of Arizona
-			// Random encryption key feature by Andrew Moulden, Site Engineering Ltd
-			// This code is freeware provided these four comment lines remain intact
-			// A wizard to generate this code is at http://www.jottings.com/obfuscator/
-			{ 
-			  coded = "eGKrAl-KGBC-j@e9l0Gjj.GKt"
-			  key = "c7hxAjRVqUXPYi0wIr8vNZtCdeTmWyH6fogESk53OalbBzLF4KGn1Q2JpM9usD"
-			  shift=coded.length;
-			  link="";
-			  for (var i=0; i<coded.length; i++) {
-			    if (key.indexOf(coded.charAt(i))==-1) {
-			      ltr = coded.charAt(i);
-			      link += (ltr);
-			    }
-			    else {     
-			      ltr = (key.indexOf(coded.charAt(i))-shift+key.length) % key.length;
-			      link += (key.charAt(ltr));
-			    }
-			  }
-			  $(".emailContact").attr("href", "mailto:"+link);	
-			  $(".emailContact2").html(link);		
-			  $(".emailContact2").attr("href", "mailto:"+link);		
-			}	
-		</script>
 	
 
 </body></html>
