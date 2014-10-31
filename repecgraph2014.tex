@@ -4,12 +4,18 @@
 \documentclass[x11names]{article}
 \usepackage{tikz}
 \usepackage{listings}
+
 \usepackage{hyperref}
-\usepackage{fullpage}
 \hypersetup{colorlinks=true,urlcolor=black,filecolor=black,linkcolor=black,citecolor=black,linkcolor=black}
 \usepackage{attachfile}
 \attachfilesetup{color=0 0 0}
 \usetikzlibrary{shapes,arrows,chains,positioning,fit,calc,backgrounds}
+
+\usepackage{fullpage}
+
+\usepackage[backend=biber]{biblatex}
+\bibliography{paper} % or
+
 %%%<
 \usepackage{verbatim}
 %\usepackage[active,tightpage]{preview}
@@ -59,6 +65,20 @@
 % -------------------------------------------------
 % Start the picture
 %\include{tikz-example}
+
+\section{Data}
+\label{sec:data}
+The core data is derived from the \repec~ data archives. Basic data on person nodes, including a list of author-edges,  is available in \href{http://openlib.org/acmes/root/docu/redif_1.html}{ReDIF} \cite{RePEc:rpc:rdfdoc:redif} format from the \repec :per archive at \url{ftp://ftp.repec.org/opt/ReDIF/RePEc/per/}. All persons, institutions, and papers/articles are indexed by their \repec~ handle. 
+
+\subsection{ReDIF source data}
+The ReDIF data format is a machine-readable yet humanly interpretable metadata format \cite{RePEc:rpc:rdfdoc:redif}. Its basic structure for a field is 
+\begin{lstlisting}
+field_name: field value
+\end{lstlisting}
+Of interest to this paper are the following fields: \lstinline|Short-ID| identifies person-node, \lstinline|author-paper|, \lstinline|author-article|, \lstinline|author-book| identify written products (`entities') that may be co-authored, and thus implicitly identify some of the edges of the graph. We could also use \lstinline|Workplace-Institution| as an additional node identifier, but defer this to future work. For the work here, data on the actual papers is not necessary, but may be used to populate the user interface. Deduplication of papers (papers with same names) are identified in the form of Perl statements at \url{ftp://repec.oru.se/RePEc/cpd/conf/relatedworks.dat}. The data for the \repec~Genealogy database is not (yet) publicly available.
+
+Pre-computed network metrics for persons is available through the \href{http://collec.repec.org/}{CollEc} project at \url{ftp://ftp.repec.org/opt/CollEc/CollEc.txt} in the form of tabular data. 
+
 \section{Graph components}
 
 \subsection{Thesis}
@@ -169,7 +189,17 @@ We should compute the network metrics before and after the inclusion of thesis a
 \clearpage
 \section{An exploratory interface}
 \label{sec:interface}
-Here plug in the graphical interface. See example at \url{http://www.vrdc.cornell.edu/repecgraph/} and Figure~\ref{fig:webinterface-pvi26}.
+In order to provide a graphical frontend to the expanded network, we proceeded as follows:
+\begin{itemize}
+\item Combined information from the CollEC activity (list of the authorship network) with information from the \repec~ Genealogy project (list of thesis advisors and advisees). Because thesis titles themselves are not captured, we define an implicit thesis entity; however, future enhancements to the \repec~ Genealogy database may capture actual thesis titles, a complete list of advisors (when they are not yet identified on the \repec~ network), and possibly URIs for each thesis.
+\item We note that the CollEC activity already defines a mechanism for storing node and edge information; the Genealogy project data is translated into this format to create the basis for the expanded network.
+\item A PROV representation of the data (as per the specifications defined earlier) is created (optional, but desirable)
+\item Finally, a graphical network browser that efficiently handles following edges to nodes (=entities) of all kinds, showing summary information while in the browser, and exiting to the full information on each node (people, institutions, articles and papers, datasets) when requested.
+\end{itemize}
+
+
+Here plug in the graphical interface. See examples of a thesis-based graph at \url{http://www.vrdc.cornell.edu/repecgraph/} and Figure~\ref{fig:webinterface-pvi26}. An example mechanism is being developed at \url{http://dev.ncrn.cornell.edu/ced2ar-web/prov2/} and may serve as the basis.
+
 \begin{figure}[ht]
 \caption{Example webinterface}\label{fig:webinterface-pvi26}
 \includegraphics[width=0.9\textwidth]{web-interface-pvi26}
@@ -191,5 +221,6 @@ This will ultimately allow to attribute authorship for certain datasets in a cle
 \include{tikz-tripartite-hilite}
 \end{figure}
 
+\printbibliography
 
 \end{document}

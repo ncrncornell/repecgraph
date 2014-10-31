@@ -1,0 +1,48 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \sortlist{entry}{nty}
+    \entry{RePEc:rpc:rdfdoc:redif}{report}{}
+      \name{labelname}{1}{}{%
+        {{hash=a42fbb528cf1861ba3bbc0b70da3eab0}{Krichel}{K\bibinitperiod}{Thomas}{T\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{hash=a42fbb528cf1861ba3bbc0b70da3eab0}{Krichel}{K\bibinitperiod}{Thomas}{T\bibinitperiod}{}{}{}{}}%
+      }
+      \list{institution}{1}{%
+        {RePEc Team}%
+      }
+      \strng{namehash}{a42fbb528cf1861ba3bbc0b70da3eab0}
+      \strng{fullhash}{a42fbb528cf1861ba3bbc0b70da3eab0}
+      \field{sortinit}{K}
+      \field{labeltitle}{{ReDIF}}
+      \field{abstract}{This document describes current version of the Research Documents Information Format (ReDIF). This is a simple field: data format inspired from the IAFA templates. A primitive nesting stucture syntax is enabled through the use of clusters of fields. ReDIF is currently used by RePEc.}
+      \field{number}{ReDIF}
+      \field{title}{{ReDIF}}
+      \field{type}{RePEc and ReDIf documentation}
+      \field{year}{1997}
+      \verb{url}
+      \verb http://ideas.repec.org/p/rpc/rdfdoc/redif.html
+      \endverb
+    \endentry
+  \endsortlist
+\endrefsection
+\endinput
+
