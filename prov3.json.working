@@ -1,0 +1,17 @@
+{
+	"nodes":[
+		{"id":"pze9","label":"Arnold Zellner"},
+		{"id":"phe22","label":"James J. Heckman"},
+		{"id":"ASA","label":"ASA fellows"},
+		{"id":"Nobel","label":"Nobel prize"},
+		{"id":"pab175","label":"John Abowd"},
+		{"id":"pab175thesis","label":"Thesis"}
+	],
+	"edges":[
+		{"id":"0","source":"pze9","target":"ASA","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"1","source":"phe22","target":"Nobel","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"2","source":"pab175thesis","target":"pze9","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"3","source":"pab175thesis","target":"phe22","type":"arrow","size":1,"color":"#ccc"},
+		{"id":"4","source":"pab175","target":"pab175thesis","type":"arrow","size":1,"color":"#ccc"}
+	]
+}
